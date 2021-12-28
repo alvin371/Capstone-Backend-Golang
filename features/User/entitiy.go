@@ -17,29 +17,30 @@ type Core struct {
 
 type Membership struct {
 	ID               int
+	Umur             int
+	Gender           string
+	Weight           int
+	Height           int
+	Goals            int
 	MembershipStatus string
 	Expired          time.Time
-	PersonalID       []PersonalData
 	CreatedAt        time.Time
 	UpdatedAT        time.Time
 }
 
-type PersonalData struct {
-	ID        int
-	Name      string
-	Umur      int
-	Gender    string
-	Weight    int
-	Height    int
-	Goals     int
-	CreatedAt time.Time
-	UpdatedAt time.Time
-}
-
 type Bussiness interface {
-	CreateUser(data Core) (resp Core, err error)
+	RegisterUser(data Core) (err error)
+	LoginUser(data Core) (user Core, err error)
+	GetUsers(data Core) (users []Core, err error)
+	GetUserById(id int) (user Core, err error)
+	UpdateUser(data Core) error
 }
 
 type Data interface {
-	InsertUser(data Core) (resp Core, err error)
+	InsertUserData(data Core) (id int, err error)
+	CheckUser(data Core) (user Core, err error)
+	GetData(Core) (user []Core, err error)
+	GetDataById(id int) (user Core, err error)
+	UpdateUser(data Core) error
+	GetUserByEmail(email string) (bool, error)
 }
