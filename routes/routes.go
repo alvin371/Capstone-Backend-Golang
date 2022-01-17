@@ -18,7 +18,10 @@ func New() *echo.Echo {
 		Format: "method=${method}, uri=${uri}, status=${status}\n",
 	}))
 	e.Pre(middleware.RemoveTrailingSlash())
-	// News
+	// News CRUD
 	e.GET("/news", presenter.NewsPresentation.GetAllNewsHandler)
+	e.GET("/news/:id", presenter.NewsPresentation.GetNewsByIDHandler)
+	e.POST("/news/create", presenter.NewsPresentation.CreateNewsHandler)
+	e.PATCH("/news/update/:id", presenter.NewsPresentation.EditNewsHandler)
 	return e
 }
