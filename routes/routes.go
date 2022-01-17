@@ -4,7 +4,7 @@ import (
 	"capstone/backend/config"
 	"capstone/backend/factory"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
@@ -18,7 +18,6 @@ func New() *echo.Echo {
 		Format: "method=${method}, uri=${uri}, status=${status}\n",
 	}))
 	e.Pre(middleware.RemoveTrailingSlash())
-
 	// News
 	e.GET("/news", presenter.NewsPresentation.GetAllNewsHandler)
 	return e

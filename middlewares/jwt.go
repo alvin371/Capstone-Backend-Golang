@@ -5,11 +5,11 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 func CreateToken(UserID uint, name string) (string, error) {
-	claims := jwt.MapClaims()
+	claims := jwt.MapClaims{}
 
 	claims["userId"] = UserID
 	claims["name"] = name
