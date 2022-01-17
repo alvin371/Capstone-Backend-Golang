@@ -1,4 +1,4 @@
-package config
+package driver
 
 import (
 	"gorm.io/driver/mysql"
@@ -7,7 +7,7 @@ import (
 
 var DB *gorm.DB
 
-func initDB() {
+func InitDB() {
 	var err error
 	db, err := gorm.Open(mysql.Open("root:@/gym?parseTime=true"), &gorm.Config{})
 
