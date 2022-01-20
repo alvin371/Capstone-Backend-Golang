@@ -33,21 +33,22 @@ func (nr *mysqlNewsRepository) SelectIdNews(id int) (news.NewsCore, error) {
 
 	return toNewsCore(idNews), nil
 }
-func (nr *mysqlNewsRepository) SelectNewsAll(search string) (news []news.NewsCore) {
+func (nr *mysqlNewsRepository) SelectNewsAll(news.NewsCore) ([]news.NewsCore, error) {
 	var record []News
-	if err := nr.Conn.Preload("").Find(&record).Error; err != nil {
-		return news
+	err := nr.Conn.Find(&record).Error
+
+	if err != nil {
+		return nil, err
 	}
-	return toNewsCoreList(record)
+	return toNewsCoreList(record), nil
 }
-func (nr *mysqlNewsRepository) InsertNews(data news.NewsCore) (resp news.NewsCore, err error) {
-	record := fromCore(data)
+func (nr *mysqlNewsRepository) InsertNews(data news.NewsCore) (err error) {
+	convData := toNewsRecord(data)
 
-	if err := nr.Conn.Create(&record).Error; err != nil {
-		return news.NewsCore{}, err
+	if err := nr.Conn.Create(&convData).Error; err != nil {
+		return err
 	}
-
-	return data, nil
+	return nil
 }
 func (nr *mysqlNewsRepository) UpdateNews(id int) (news news.NewsCore, err error) {
 	var singleNews News

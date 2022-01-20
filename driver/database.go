@@ -1,6 +1,8 @@
 package driver
 
 import (
+	news "capstone/backend/features/News/data"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -15,4 +17,5 @@ func InitDB() {
 		panic(err)
 	}
 	DB = db
+	DB.AutoMigrate(&news.News{})
 }
