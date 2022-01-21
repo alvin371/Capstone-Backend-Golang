@@ -85,15 +85,14 @@ func (nh *NewsHandler) EditNewsHandler(e echo.Context) error {
 			"message": "id tidak ditemukan",
 		})
 	}
-	return err
-	// data, err := nh.newsBussiness.EditNews(id)
-	// if err != nil {
-	// 	return e.JSON(http.StatusInternalServerError, map[string]interface{}{
-	// 		"message": err.Error(),
-	// 	})
-	// }
-	// return e.JSON(http.StatusOK, map[string]interface{}{
-	// 	"message": "Success",
-	// 	"data":    presentation_response.ToCore(data),
-	// })
+	data, err := nh.newsBussiness.EditNews(id)
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Success",
+		"data":    presentation_response.ToCore(data),
+	})
 }
