@@ -28,15 +28,51 @@ func (usrHandler *UserHandler) CreateUserHandler(e echo.Context) error {
 			"message": err.Error(),
 		})
 	}
-
+	if len([]rune(newAccount.Password)) < 8 {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": "Password must be greather than 8 Characters",
+		})
+	}
+	if err := usrHandler.userBussiness.CreateUser(newAccount.ToUserCore()); err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "Success",
 		"data":    newAccount,
 	})
 }
 
+func (usrHandler *UserHandler) GetUserById(e echo.Context) error {
+	id, err := strconv.Atoi(e.Param("id"))
+	// fmt.Println("Isi ID : ", id)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	data, err := usrHandler.userBussiness.GetUserById(id)
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Success",
+		"data":    rep.ToUserCore(data),
+	})
+}
+
 func (usrHandler *UserHandler) GetAllUserHandler(e echo.Context) error {
-	result := usrHandler.userBussiness.GetAllUser("")
+	result, err := usrHandler.userBussiness.GetAllUser(user.User{})
+
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
 
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "All is Well",

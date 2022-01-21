@@ -16,31 +16,43 @@ func NewMySqlUSer(DB *gorm.DB) user.Data {
 	return &UserData{DB}
 }
 
-func (ud *UserData) InsertUser(data user.User) (usr user.User, err error) {
+func (ud *UserData) InsertUser(data user.User) (err error) {
 	record := fromCore(data)
-
 	if err := ud.DB.Create(&record).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+func (ud *UserData) SelectUserById(id int) (user.User, error) {
+	var userID User
+
+	err := ud.DB.Find(&userID, id).Error
+
+	if userID.Username == "" {
 		return user.User{}, err
 	}
 
-	return data, nil
+	if err != nil {
+		return user.User{}, err
+	}
+	return toUserCore(userID), err
 }
 
-func (ud *UserData) SelectAllUser(search string) []user.User {
+func (ud *UserData) SelectAllUser(userData user.User) ([]user.User, error) {
 	var users []User
 
 	err := ud.DB.Find(&users).Error
 
 	if err != nil {
-		return nil
+		return nil, err
 	}
-	return toUserCoreList(users)
+	return toUserCoreList(users), err
 }
 
 func (ud *UserData) CheckAccount(data user.User) (user.User, error) {
 	var users User
 	err := ud.DB.Where("username = ? and password = ?", data.Username, data.Password).First(&users).Error
-
 	// Eliminate null data
 	if users.Username == "" && users.ID == 0 {
 		return user.User{}, errors.New("user not found")

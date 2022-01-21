@@ -8,9 +8,13 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string
-	Password string
-	Email    string
+	Username     string `json: "username" form: "username"`
+	Password     string `json: "password" form: "password"`
+	Role         string `json: "role" form:"role"`
+	Email        string `json: "email" form: "email"`
+	Avatar       string `json: "avatar" form: "avatar"`
+	Goals        string `json:"goals" form: "goals"`
+	MemberStatus string `json: "member_status" form: "member_status"`
 }
 
 func toUserRecord(user user.User) User {
@@ -43,5 +47,13 @@ func toUserCoreList(accList []User) []user.User {
 }
 
 func fromCore(usr user.User) User {
-	return User{}
+	return User{
+		Username:     usr.Username,
+		Email:        usr.Email,
+		Role:         usr.Role,
+		Password:     usr.Password,
+		Avatar:       usr.Avatar,
+		Goals:        usr.Goals,
+		MemberStatus: usr.MemberStatus,
+	}
 }

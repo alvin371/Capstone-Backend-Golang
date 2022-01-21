@@ -25,10 +25,11 @@ func New() *echo.Echo {
 	e.PATCH("/news/update/:id", presenter.NewsPresentation.EditNewsHandler)
 
 	// User Credential
-	e.POST("/account/register", presenter.UserPresentation.CreateUserHandler)
-	e.POST("/account/login", presenter.UserPresentation.LoginUserHandler)
-	jwt.GET("/account", presenter.UserPresentation.GetAllUserHandler)
-	e.PUT("/account/:id", presenter.UserPresentation.UpdateAccountHandler)
+	e.POST("/user/register", presenter.UserPresentation.CreateUserHandler)
+	e.POST("/user/login", presenter.UserPresentation.LoginUserHandler)
+	jwt.GET("/user", presenter.UserPresentation.GetAllUserHandler)
+	jwt.GET("/user/:id", presenter.UserPresentation.GetUserById)
+	e.PUT("/user/:id", presenter.UserPresentation.UpdateAccountHandler)
 
 	return e
 }

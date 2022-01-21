@@ -18,20 +18,25 @@ func NewUserBussiness(userData user.Data) user.Bussiness {
 	}
 }
 
-func (ub *UserBussiness) GetAllUser(search string) (user []user.User) {
-	user = ub.userData.SelectAllUser(search)
-	return
-}
-func (ub *UserBussiness) CreateUser(data user.User) (resp user.User, err error) {
-	if err := ub.validate.Struct(data); err != nil {
-		return user.User{}, err
-	}
-
-	resp, err = ub.userData.InsertUser(data)
+func (ub *UserBussiness) GetAllUser(userData user.User) (resp []user.User, err error) {
+	user, err := ub.userData.SelectAllUser(userData)
 	if err != nil {
-		return user.User{}, err
+		return nil, err
 	}
-	return user.User{}, nil
+	return user, nil
+}
+func (ub *UserBussiness) GetUserById(id int) (user user.User, err error) {
+	userData, err := ub.userData.SelectUserById(id)
+	if err != nil {
+		return user, err
+	}
+	return userData, nil
+}
+func (ub *UserBussiness) CreateUser(data user.User) (err error) {
+	if err := ub.userData.InsertUser(data); err != nil {
+		return err
+	}
+	return nil
 }
 func (ub *UserBussiness) EditUser(id int) (usr user.User, err error) {
 	userData, err := ub.userData.UpdateUser(id)

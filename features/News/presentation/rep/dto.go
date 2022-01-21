@@ -6,7 +6,7 @@ type News struct {
 	Title       string `json: "title"`
 	Description string `json: "description"`
 	Content     string `json: "content"`
-	CreatorName string `json: "creator"`
+	CreatorName string `json: "creator_name"`
 	Picture     string `json: "picture"`
 }
 
