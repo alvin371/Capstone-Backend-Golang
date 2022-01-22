@@ -52,7 +52,7 @@ func (ud *UserData) SelectAllUser(userData user.User) ([]user.User, error) {
 
 func (ud *UserData) CheckAccount(data user.User) (user.User, error) {
 	var users User
-	err := ud.DB.Where("username = ? and password = ?", data.Username, data.Password).First(&users).Error
+	err := ud.DB.Where("username = ? AND password = ?", data.Username, data.Password).First(&users).Error
 	// Eliminate null data
 	if users.Username == "" && users.ID == 0 {
 		return user.User{}, errors.New("user not found")
