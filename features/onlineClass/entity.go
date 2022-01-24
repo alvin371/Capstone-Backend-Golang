@@ -16,17 +16,17 @@ type OnlineClassCore struct {
 
 type Bussiness interface {
 	// crud
-	GetAllClass(OnlineClassCore) (class []OnlineClassCore)
+	GetAllClass(OnlineClassCore) (class []OnlineClassCore, err error)
 	GetClassById(id int) (OnlineClassCore, error)
-	CreateClass(data OnlineClassCore) (resp OnlineClassCore, err error)
+	CreateClass(data OnlineClassCore) (err error)
 	EditClass(id int) (news OnlineClassCore, err error)
 	DeleteClass(id int) (news OnlineClassCore, err error)
 }
 
 type Data interface {
-	SelectAllClass(OnlineClassCore) (class []OnlineClassCore)
+	SelectAllClass(OnlineClassCore) (class []OnlineClassCore, err error)
 	SelectClassById(id int) (OnlineClassCore, error)
-	InsertClass(data OnlineClassCore) (resp OnlineClassCore, err error)
+	InsertClass(data OnlineClassCore) (err error)
 	UpdateClass(id int) (news OnlineClassCore, err error)
 	DestryoClass(id int) (news OnlineClassCore, err error)
 }
