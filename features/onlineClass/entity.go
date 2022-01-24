@@ -9,7 +9,8 @@ type OnlineClassCore struct {
 	Date      string `json:"date`
 	Link      string `json:"link"`
 	Time      string `json:"time"`
-	Trainer   string `json:"trainer`
+	Trainer   string `json:"trainer"`
+	Image     string `json: "image"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

@@ -12,7 +12,8 @@ type OnlineClass struct {
 	Date      string `json:"date`
 	Link      string `json:"link"`
 	Time      string `json:"time"`
-	Trainer   string `json:"trainer`
+	Trainer   string `json:"trainer"`
+	Image     string `json: "image"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
@@ -26,6 +27,7 @@ func toClassRecord(oc onlineClass.OnlineClassCore) OnlineClass {
 		Link:      oc.Link,
 		Time:      oc.Time,
 		Trainer:   oc.Trainer,
+		Image:     oc.Image,
 		CreatedAt: oc.CreatedAt,
 		UpdatedAt: oc.UpdatedAt,
 	}
@@ -40,6 +42,7 @@ func toClassCore(oc OnlineClass) onlineClass.OnlineClassCore {
 		Link:      oc.Link,
 		Time:      oc.Time,
 		Trainer:   oc.Trainer,
+		Image:     oc.Image,
 		CreatedAt: oc.CreatedAt,
 		UpdatedAt: oc.UpdatedAt,
 	}

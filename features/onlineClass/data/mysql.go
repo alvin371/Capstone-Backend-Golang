@@ -65,7 +65,7 @@ func (or *mysqlOnlineClassRepo) DestryoClass(id int) (news onlineClass.OnlineCla
 	var singleClass OnlineClass
 	// fmt.Println("Isi single account : ", singleClass)
 	// fmt.Println("id : ", id)
-	err = or.Conn.Model(&singleClass).Where("id=?", id).Updates(&singleClass).Error
+	err = or.Conn.Model(&singleClass).Where("id=?", id).Delete(&singleClass).Error
 
 	if err != nil {
 		return news, err
