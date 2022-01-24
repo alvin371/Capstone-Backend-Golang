@@ -6,6 +6,7 @@ import (
 	user "capstone/backend/features/User"
 	"capstone/backend/features/User/presentation/rep"
 	"capstone/backend/features/User/presentation/req"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -22,15 +23,16 @@ func NewHandlerAccount(userBussiness user.Bussiness) *UserHandler {
 
 func (usrHandler *UserHandler) CreateUserHandler(e echo.Context) error {
 	newAccount := req.User{}
-
-	if err := e.Bind(&newAccount); err != nil {
-		return e.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": err.Error(),
-		})
-	}
+	fmt.Println("this new account data", newAccount)
+	fmt.Println("this binding data", e.Bind(&newAccount))
 	if len([]rune(newAccount.Password)) < 8 {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Password must be greather than 8 Characters",
+		})
+	}
+	if err := e.Bind(&newAccount); err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": err.Error(),
 		})
 	}
 	if err := usrHandler.userBussiness.CreateUser(newAccount.ToUserCore()); err != nil {
@@ -90,6 +92,7 @@ func (usrHandler *UserHandler) LoginUserHandler(e echo.Context) error {
 			"message": err.Error(),
 		})
 	}
+
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "Success",
 		"data":    rep.ToUserLoginResponse(data),
