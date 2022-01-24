@@ -22,5 +22,11 @@ func New() *echo.Echo {
 	e.GET("/news/:id", presenter.NewsPresentation.GetNewsByIDHandler)
 	e.POST("/news/create", presenter.NewsPresentation.CreateNewsHandler)
 	e.PATCH("/news/update/:id", presenter.NewsPresentation.EditNewsHandler)
+
+	e.GET("/online-class", presenter.OnlineClassPresentation.GetAllClassHandler)
+	e.GET("/online-class/:id", presenter.OnlineClassPresentation.GetClassByIdHandler)
+	e.POST("/online-class/create", presenter.OnlineClassPresentation.CreateClassHandler)
+	e.PATCH("/online-class/edit/:id", presenter.OnlineClassPresentation.UpdateClassHandler)
+	e.PATCH("/online-class/delete/:id", presenter.OnlineClassPresentation.DeleteClassHandler)
 	return e
 }
