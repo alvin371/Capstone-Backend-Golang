@@ -1,10 +1,8 @@
 package data
 
 import (
-	news "capstone/backend/features/News"
 	"capstone/backend/features/onlineClass"
 	"errors"
-	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -20,57 +18,58 @@ func NewOnlineClassRepository(conn *gorm.DB) onlineClass.Data {
 }
 
 func (or *mysqlOnlineClassRepo) SelectAllClass(onlineClass.OnlineClassCore) (class []onlineClass.OnlineClassCore, err error) {
-	var record []News
-	if err := nr.Conn.Preload("").Find(&record).Error; err != nil {
-		return news
+	var record []OnlineClass
+	err = or.Conn.Find(&record).Error
+
+	if err != nil {
+		return nil, err
 	}
-	return toNewsCoreList(record)
+	return toOnlineClassCoreList(record), nil
 }
 func (or *mysqlOnlineClassRepo) SelectClassById(id int) (onlineClass.OnlineClassCore, error) {
-	var idNews News
+	var idOclass OnlineClass
 
-	err := nr.Conn.First(&idNews, id).Error
+	err := or.Conn.First(&idOclass, id).Error
 
-	if idNews.Title == "" && idNews.ID == 0 {
-		return news.NewsCore{}, errors.New("News not found")
+	if idOclass.Name == "" && idOclass.ID == 0 {
+		return onlineClass.OnlineClassCore{}, errors.New("News not found")
 	}
 
 	if err != nil {
-		return news.NewsCore{}, err
+		return onlineClass.OnlineClassCore{}, err
 	}
 
-	return toNewsCore(idNews), nil
+	return toClassCore(idOclass), nil
 }
 func (or *mysqlOnlineClassRepo) InsertClass(data onlineClass.OnlineClassCore) (err error) {
-	record := fromCore(data)
+	convData := toClassRecord(data)
 
-	if err := nr.Conn.Create(&record).Error; err != nil {
-		return news.NewsCore{}, err
+	if err := or.Conn.Create(&convData).Error; err != nil {
+		return err
 	}
-
-	return data, nil
+	return nil
 }
 func (or *mysqlOnlineClassRepo) UpdateClass(id int) (news onlineClass.OnlineClassCore, err error) {
-	var singleNews News
-	fmt.Println("Isi single account : ", singleNews)
-	fmt.Println("id : ", id)
-	err = nr.Conn.Model(&singleNews).Where("id=?", id).Updates(&singleNews).Error
+	var singleClass OnlineClass
+	// fmt.Println("Isi single account : ", singleClass)
+	// fmt.Println("id : ", id)
+	err = or.Conn.Model(&singleClass).Where("id=?", id).Updates(&singleClass).Error
 
 	if err != nil {
 		return news, err
 	}
 
-	return toNewsCore(singleNews), nil
+	return toClassCore(singleClass), nil
 }
 func (or *mysqlOnlineClassRepo) DestryoClass(id int) (news onlineClass.OnlineClassCore, err error) {
-	var singleNews News
-	fmt.Println("Isi single account : ", singleNews)
-	fmt.Println("id : ", id)
-	err = nr.Conn.Model(&singleNews).Where("id=?", id).Updates(&singleNews).Error
+	var singleClass OnlineClass
+	// fmt.Println("Isi single account : ", singleClass)
+	// fmt.Println("id : ", id)
+	err = or.Conn.Model(&singleClass).Where("id=?", id).Updates(&singleClass).Error
 
 	if err != nil {
 		return news, err
 	}
 
-	return toNewsCore(singleNews), nil
+	return toClassCore(singleClass), nil
 }
