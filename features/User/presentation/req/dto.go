@@ -20,8 +20,8 @@ type User struct {
 }
 
 type UserAuth struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username string
+	Password string
 }
 
 func FromCore(core User) user.User {

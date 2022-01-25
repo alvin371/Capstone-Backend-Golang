@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserHandler struct {
@@ -28,13 +29,21 @@ func (usrHandler *UserHandler) CreateUserHandler(e echo.Context) error {
 			"message": err.Error(),
 		})
 	}
-	fmt.Println("this new account data", newAccount)
+	// fmt.Println("this new account data", newAccount)
 	if len([]rune(newAccount.Password)) < 8 {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "Password must be greather than 8 Characters",
 		})
 	}
+	hash, err := bcrypt.GenerateFromPassword([]byte(newAccount.Password), 5)
+	newAccount.Password = string(hash)
 
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	fmt.Println("new account data", newAccount)
 	if err := usrHandler.userBussiness.CreateUser(newAccount.ToUserCore()); err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err.Error(),
@@ -85,7 +94,9 @@ func (usrHandler *UserHandler) GetAllUserHandler(e echo.Context) error {
 func (usrHandler *UserHandler) LoginUserHandler(e echo.Context) error {
 	AccountAuth := req.UserAuth{}
 	e.Bind(&AccountAuth)
-
+	hash, err := bcrypt.GenerateFromPassword([]byte(AccountAuth.Password), 5)
+	AccountAuth.Password = string(hash)
+	fmt.Println("account auth", AccountAuth)
 	data, err := usrHandler.userBussiness.LoginUser(AccountAuth.ToUserAuth())
 	if err != nil {
 		return e.JSON(http.StatusForbidden, map[string]interface{}{
