@@ -3,6 +3,8 @@ package driver
 import (
 	news "capstone/backend/features/News/data"
 	user "capstone/backend/features/User"
+	offlineClass "capstone/backend/features/offlineClass"
+	onlineClass "capstone/backend/features/onlineClass"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -21,5 +23,5 @@ func InitDB() {
 		panic(err)
 	}
 	DB = db
-	DB.AutoMigrate(&news.News{}, &user.User{})
+	DB.AutoMigrate(&news.News{}, &onlineClass.OnlineClassCore{}, &offlineClass.OfflineClassCore{}, &user.User{})
 }

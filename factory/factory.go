@@ -9,11 +9,21 @@ import (
 	_user_bussiness "capstone/backend/features/User/bussiness"
 	_user_data "capstone/backend/features/User/data"
 	_user_presentation "capstone/backend/features/User/presentation"
+
+	_onlineClass_bussiness "capstone/backend/features/onlineClass/bussiness"
+	_onlineClass_data "capstone/backend/features/onlineClass/data"
+	_onlineClass_presentation "capstone/backend/features/onlineClass/presentation"
+
+	_offlineClass_bussiness "capstone/backend/features/offlineClass/bussiness"
+	_offlineClass_data "capstone/backend/features/offlineClass/data"
+	_offlineClass_presentation "capstone/backend/features/offlineClass/presentation"
 )
 
 type Presenter struct {
-	NewsPresentation *_news_presentation.NewsHandler
-	UserPresentation *_user_presentation.UserHandler
+	NewsPresentation                  *_news_presentation.NewsHandler
+	UserPresentation                  *_user_presentation.UserHandler
+	OnlineClassPresentation           *_onlineClass_presentation.OnlineClassHandler
+	PresenterOfflineClassPresentation *_offlineClass_presentation.OfflineClassHandler
 }
 
 func Init() Presenter {
@@ -26,9 +36,20 @@ func Init() Presenter {
 	userData := _user_data.NewMySqlUSer(driver.DB)
 	userBussiness := _user_bussiness.NewUserBussiness(userData)
 	userPresentation := _user_presentation.NewHandlerAccount(userBussiness)
+
+	onlineClassData := _onlineClass_data.NewOnlineClassRepository(driver.DB)
+	onlineClassBussiness := _onlineClass_bussiness.NewBussinessOnlineClass(onlineClassData)
+	onlineClassPresentation := _onlineClass_presentation.NewOnlineClassHandler(onlineClassBussiness)
+
+	offlineClassData := _offlineClass_data.NewofflineClassRepository(driver.DB)
+	offlineClassBussiness := _offlineClass_bussiness.NewBussinessOfflineClass(offlineClassData)
+	offlineClassPresentation := _offlineClass_presentation.NewOfflineClassHandler(offlineClassBussiness)
+
 	return Presenter{
-		NewsPresentation: newsPresentation,
-		UserPresentation: userPresentation,
+		NewsPresentation:                  newsPresentation,
+		UserPresentation:                  userPresentation,
+		OnlineClassPresentation:           onlineClassPresentation,
+		PresenterOfflineClassPresentation: offlineClassPresentation,
 	}
 
 }
