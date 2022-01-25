@@ -26,20 +26,18 @@ func (nu *NewsUsecase) GetNewsByID(id int) (news.NewsCore, error) {
 	}
 	return newsData, nil
 }
-func (nu *NewsUsecase) GetAllNews(search string) (resp []news.NewsCore) {
-	resp = nu.nData.SelectNewsAll(search)
-	return
-}
-func (nu *NewsUsecase) CreateNews(data news.NewsCore) (resp news.NewsCore, err error) {
-	if err := nu.validate.Struct(data); err != nil {
-		return news.NewsCore{}, err
-	}
-
-	resp, err = nu.nData.InsertNews(data)
+func (nu *NewsUsecase) GetAllNews(data news.NewsCore) (resp []news.NewsCore, err error) {
+	news, err := nu.nData.SelectNewsAll(data)
 	if err != nil {
-		return news.NewsCore{}, err
+		return nil, err
 	}
-	return news.NewsCore{}, nil
+	return news, nil
+}
+func (nu *NewsUsecase) CreateNews(data news.NewsCore) (err error) {
+	if err := nu.nData.InsertNews(data); err != nil {
+		return err
+	}
+	return nil
 }
 func (nu *NewsUsecase) EditNews(id int) (news news.NewsCore, err error) {
 	newsData, err := nu.nData.UpdateNews(id)

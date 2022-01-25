@@ -9,7 +9,6 @@ import (
 func main() {
 	driver.InitDB()
 	e := routes.New()
-
 	// Log Middleware
 	_middleware.LogMiddlewareInit(e)
 
