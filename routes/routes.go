@@ -24,6 +24,11 @@ func New() *echo.Echo {
 	e.POST("/news/create", presenter.NewsPresentation.CreateNewsHandler)
 	e.PATCH("/news/update/:id", presenter.NewsPresentation.EditNewsHandler)
 
+	e.GET("/online-class", presenter.OnlineClassPresentation.GetAllClassHandler)
+	e.GET("/online-class/:id", presenter.OnlineClassPresentation.GetClassByIdHandler)
+	jwt.POST("/online-class/create", presenter.OnlineClassPresentation.CreateClassHandler)
+	jwt.PATCH("/online-class/edit/:id", presenter.OnlineClassPresentation.UpdateClassHandler)
+	jwt.PATCH("/online-class/delete/:id", presenter.OnlineClassPresentation.DeleteClassHandler)
 	// User Credential
 	e.POST("/user/register", presenter.UserPresentation.CreateUserHandler)
 	e.POST("/user/login", presenter.UserPresentation.LoginUserHandler)
