@@ -3,6 +3,7 @@ package bussiness
 import (
 	user "capstone/backend/features/User"
 	"capstone/backend/middlewares"
+	"fmt"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -34,6 +35,7 @@ func (ub *UserBussiness) GetUserById(id int) (user user.User, err error) {
 }
 func (ub *UserBussiness) CreateUser(data user.User) (err error) {
 	if err := ub.userData.InsertUser(data); err != nil {
+		fmt.Println(err)
 		return err
 	}
 	return nil

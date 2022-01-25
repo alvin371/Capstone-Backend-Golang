@@ -14,6 +14,7 @@ var DB *gorm.DB
 
 func InitDB() {
 	var err error
+	// dsn := "u280225155_gym:Rahasia12345@tcp(194.163.35.1)/u280225155_gym?charset=utf8mb4&parseTime=true&loc=Local"
 	dsnLocal := "root:@tcp(localhost)/gym?charset=utf8mb4&parseTime=true&loc=Local"
 
 	db, err := gorm.Open(mysql.Open(dsnLocal), &gorm.Config{})

@@ -2,30 +2,20 @@ package data
 
 import (
 	user "capstone/backend/features/User"
-
-	"gorm.io/gorm"
+	"time"
 )
 
 type User struct {
-	gorm.Model
-	Username     string `json: "username" form: "username"`
-	Password     string `json: "password" form: "password"`
-	Role         string `json: "role" form:"role"`
-	Email        string `json: "email" form: "email"`
+	ID           uint
+	Username     string `json: "username" form: "username" gorm:"unique;not null"`
+	Password     string `json: "password" form: "password" gorm:"not null"`
+	Role         string `json: "role" form:"role" gorm:"default:user"`
+	Email        string `json: "email" form: "email" gorm:"unique;not null"`
 	Avatar       string `json: "avatar" form: "avatar"`
 	Goals        string `json:"goals" form: "goals"`
-	MemberStatus string `json: "member_status" form: "member_status"`
-}
-
-func toUserRecord(user user.User) User {
-	return User{
-		Model: gorm.Model{
-			ID: user.ID,
-		},
-		Username: user.Username,
-		Password: user.Password,
-		Email:    user.Email,
-	}
+	MemberStatus string `json: "member_status" form: "member_status" gorm:"default:reguler"`
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
 }
 
 func toUserCore(usr User) user.User {

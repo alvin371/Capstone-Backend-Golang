@@ -7,21 +7,21 @@ import (
 
 type User struct {
 	ID           uint
-	Username     string    `json: "username" form:"username"`
-	Role         string    `json: "role" form:"role"`
-	Email        string    `json: "email" form:"email"`
-	Password     string    `json: "password" form:"password"`
-	Token        string    `json:"token" form:"token"`
-	Avatar       string    `json: "avatar" form:"avatar"`
-	Goals        string    `json:"goals" form:"goals"`
-	MemberStatus string    `json: "member_status" form:"member_status"`
-	Created_at   time.Time `json: "created_at"`
-	Updated_at   time.Time `json: "updated_at"`
+	Username     string `form:"username"`
+	Password     string `form:"password"`
+	Role         string `form:"role"`
+	Email        string `form:"email"`
+	Token        string
+	Avatar       string `form:"avatar"`
+	Goals        string `form:"goals"`
+	MemberStatus string `form:"member_status"`
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
 }
 
 type UserAuth struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username string
+	Password string
 }
 
 func FromCore(core User) user.User {
@@ -35,8 +35,8 @@ func FromCore(core User) user.User {
 		Avatar:       core.Avatar,
 		Goals:        core.Goals,
 		MemberStatus: core.MemberStatus,
-		Created_at:   core.Created_at,
-		Updated_at:   core.Updated_at,
+		Created_at:   core.CreatedAt,
+		Updated_at:   core.UpdatedAt,
 	}
 }
 
@@ -51,8 +51,8 @@ func (core *User) ToUserCore() user.User {
 		Avatar:       core.Avatar,
 		Goals:        core.Goals,
 		MemberStatus: core.MemberStatus,
-		Created_at:   core.Created_at,
-		Updated_at:   core.Updated_at,
+		Created_at:   core.CreatedAt,
+		Updated_at:   core.UpdatedAt,
 	}
 }
 
