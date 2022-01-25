@@ -2,17 +2,17 @@ package req
 
 import "capstone/backend/features/onlineClass"
 
-type OnlineClass struct {
-	Name    string `json:"name"`
-	Day     string `json:"day"`
-	Date    string `json:"date"`
-	Link    string `json:"link"`
-	Time    string `json:"time"`
-	Trainer string `json:"trainer"`
-	Image   string `json:"image"`
+type OnlineClassCore struct {
+	Name    string `json:"name" form:"name"`
+	Day     string `json:"day" form:"day"`
+	Date    string `json:"date" form:"date"`
+	Link    string `json:"link" form:"link"`
+	Time    string `json:"time" form:"time"`
+	Trainer string `json:"trainer" form:"trainer"`
+	Image   string `json:"image" form:"image"`
 }
 
-func FromCore(core OnlineClass) onlineClass.OnlineClassCore {
+func FromCore(core OnlineClassCore) onlineClass.OnlineClassCore {
 	return onlineClass.OnlineClassCore{
 		Name:    core.Name,
 		Day:     core.Day,
@@ -24,7 +24,7 @@ func FromCore(core OnlineClass) onlineClass.OnlineClassCore {
 	}
 }
 
-func (core *OnlineClass) ToClassCore() onlineClass.OnlineClassCore {
+func (core *OnlineClassCore) ToClassCore() onlineClass.OnlineClassCore {
 	return onlineClass.OnlineClassCore{
 		Name:    core.Name,
 		Day:     core.Day,

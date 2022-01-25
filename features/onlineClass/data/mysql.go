@@ -18,7 +18,7 @@ func NewOnlineClassRepository(conn *gorm.DB) onlineClass.Data {
 }
 
 func (or *mysqlOnlineClassRepo) SelectAllClass(onlineClass.OnlineClassCore) (class []onlineClass.OnlineClassCore, err error) {
-	var record []OnlineClass
+	var record []OnlineClassCore
 	err = or.Conn.Find(&record).Error
 
 	if err != nil {
@@ -27,7 +27,7 @@ func (or *mysqlOnlineClassRepo) SelectAllClass(onlineClass.OnlineClassCore) (cla
 	return toOnlineClassCoreList(record), nil
 }
 func (or *mysqlOnlineClassRepo) SelectClassById(id int) (onlineClass.OnlineClassCore, error) {
-	var idOclass OnlineClass
+	var idOclass OnlineClassCore
 
 	err := or.Conn.First(&idOclass, id).Error
 
@@ -49,11 +49,11 @@ func (or *mysqlOnlineClassRepo) InsertClass(data onlineClass.OnlineClassCore) (e
 	}
 	return nil
 }
-func (or *mysqlOnlineClassRepo) UpdateClass(id int) (news onlineClass.OnlineClassCore, err error) {
-	var singleClass OnlineClass
+func (or *mysqlOnlineClassRepo) UpdateClass(id int, data onlineClass.OnlineClassCore) (news onlineClass.OnlineClassCore, err error) {
+	var singleClass OnlineClassCore
 	// fmt.Println("Isi single account : ", singleClass)
 	// fmt.Println("id : ", id)
-	err = or.Conn.Model(&singleClass).Where("id=?", id).Updates(&singleClass).Error
+	err = or.Conn.Model(&singleClass).Where("id=?", id).Updates(&data).Error
 
 	if err != nil {
 		return news, err
@@ -62,7 +62,7 @@ func (or *mysqlOnlineClassRepo) UpdateClass(id int) (news onlineClass.OnlineClas
 	return toClassCore(singleClass), nil
 }
 func (or *mysqlOnlineClassRepo) DestryoClass(id int) (news onlineClass.OnlineClassCore, err error) {
-	var singleClass OnlineClass
+	var singleClass OnlineClassCore
 	// fmt.Println("Isi single account : ", singleClass)
 	// fmt.Println("id : ", id)
 	err = or.Conn.Model(&singleClass).Where("id=?", id).Delete(&singleClass).Error

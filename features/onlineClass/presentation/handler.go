@@ -53,14 +53,14 @@ func (oh *OnlineClassHandler) GetClassByIdHandler(e echo.Context) error {
 	})
 }
 func (oh *OnlineClassHandler) CreateClassHandler(e echo.Context) error {
-	newOnlineClass := presentation_request.OnlineClass{}
-	fmt.Println("testing", e)
+	newOnlineClass := presentation_request.OnlineClassCore{}
 
 	if err := e.Bind(&newOnlineClass); err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),
 		})
 	}
+	fmt.Println("testing", newOnlineClass)
 
 	if err := oh.onlineClassBussiness.CreateClass(newOnlineClass.ToClassCore()); err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
@@ -75,14 +75,21 @@ func (oh *OnlineClassHandler) CreateClassHandler(e echo.Context) error {
 }
 func (oh *OnlineClassHandler) UpdateClassHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
+	updateOnlineClass := presentation_request.OnlineClassCore{}
+	if err := e.Bind(&updateOnlineClass); err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
 	fmt.Println("Test : ", id)
+	fmt.Println("testing", updateOnlineClass)
 
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": "id tidak ditemukan",
 		})
 	}
-	data, err := oh.onlineClassBussiness.EditClass(id)
+	data, err := oh.onlineClassBussiness.EditClass(id, updateOnlineClass.ToClassCore())
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err.Error(),

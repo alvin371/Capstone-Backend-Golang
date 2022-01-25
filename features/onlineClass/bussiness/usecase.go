@@ -35,8 +35,8 @@ func (ou *OnlineClassUseCase) CreateClass(data onlineClass.OnlineClassCore) (err
 	}
 	return nil
 }
-func (ou *OnlineClassUseCase) EditClass(id int) (onlineClass onlineClass.OnlineClassCore, err error) {
-	onlineClassData, err := ou.OcData.UpdateClass(id)
+func (ou *OnlineClassUseCase) EditClass(id int, data onlineClass.OnlineClassCore) (onlineClass onlineClass.OnlineClassCore, err error) {
+	onlineClassData, err := ou.OcData.UpdateClass(id, data)
 
 	if err != nil {
 		return onlineClass, err

@@ -2,7 +2,7 @@ package rep
 
 import "capstone/backend/features/onlineClass"
 
-type OnlineClass struct {
+type OnlineClassCore struct {
 	Name    string `json:"name"`
 	Day     string `json:"day"`
 	Date    string `json:"date"`
@@ -12,8 +12,8 @@ type OnlineClass struct {
 	Image   string `json:"image"`
 }
 
-func ToCore(req onlineClass.OnlineClassCore) OnlineClass {
-	return OnlineClass{
+func ToCore(req onlineClass.OnlineClassCore) OnlineClassCore {
+	return OnlineClassCore{
 		Name:    req.Name,
 		Day:     req.Day,
 		Date:    req.Date,
@@ -24,8 +24,8 @@ func ToCore(req onlineClass.OnlineClassCore) OnlineClass {
 	}
 }
 
-func ToCoreSlice(core []onlineClass.OnlineClassCore) []OnlineClass {
-	var onlineClassArray []OnlineClass
+func ToCoreSlice(core []onlineClass.OnlineClassCore) []OnlineClassCore {
+	var onlineClassArray []OnlineClassCore
 	for key := range core {
 		onlineClassArray = append(onlineClassArray, ToCore(core[key]))
 	}

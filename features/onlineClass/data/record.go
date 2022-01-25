@@ -5,21 +5,21 @@ import (
 	"time"
 )
 
-type OnlineClass struct {
+type OnlineClassCore struct {
 	ID        int
 	Name      string `json:"name"`
 	Day       string `json:"day"`
-	Date      string `json:"date`
+	Date      string `json:"date"`
 	Link      string `json:"link"`
 	Time      string `json:"time"`
 	Trainer   string `json:"trainer"`
-	Image     string `json: "image"`
+	Image     string `json:"image"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-func toClassRecord(oc onlineClass.OnlineClassCore) OnlineClass {
-	return OnlineClass{
+func toClassRecord(oc onlineClass.OnlineClassCore) OnlineClassCore {
+	return OnlineClassCore{
 		ID:        oc.ID,
 		Name:      oc.Name,
 		Day:       oc.Day,
@@ -33,7 +33,7 @@ func toClassRecord(oc onlineClass.OnlineClassCore) OnlineClass {
 	}
 }
 
-func toClassCore(oc OnlineClass) onlineClass.OnlineClassCore {
+func toClassCore(oc OnlineClassCore) onlineClass.OnlineClassCore {
 	return onlineClass.OnlineClassCore{
 		ID:        oc.ID,
 		Name:      oc.Name,
@@ -48,7 +48,7 @@ func toClassCore(oc OnlineClass) onlineClass.OnlineClassCore {
 	}
 }
 
-func toOnlineClassCoreList(oc []OnlineClass) []onlineClass.OnlineClassCore {
+func toOnlineClassCoreList(oc []OnlineClassCore) []onlineClass.OnlineClassCore {
 	convOC := []onlineClass.OnlineClassCore{}
 
 	for _, ocList := range oc {
