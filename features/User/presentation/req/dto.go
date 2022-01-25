@@ -7,14 +7,14 @@ import (
 
 type User struct {
 	ID           uint
-	Username     string `json: "username" form: "username" gorm:"unique;not null"`
-	Password     string `json: "password" form: "password" gorm:"not null"`
-	Role         string `json: "role" form:"role" gorm:"default:user"`
-	Email        string `json: "email" form: "email" gorm:"unique;not null"`
-	Token        string `json:"token"`
-	Avatar       string `json: "avatar" form: "avatar"`
-	Goals        string `json:"goals" form: "goals"`
-	MemberStatus string `json: "member_status" form: "member_status" gorm:"default:reguler"`
+	Username     string `form:"username"`
+	Password     string `form:"password"`
+	Role         string `form:"role"`
+	Email        string `form:"email"`
+	Token        string
+	Avatar       string `form:"avatar"`
+	Goals        string `form:"goals"`
+	MemberStatus string `form:"member_status"`
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 }

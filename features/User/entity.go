@@ -4,16 +4,16 @@ import "time"
 
 type User struct {
 	ID           uint
-	Username     string    `json: "username" form:"username" gorm:"unique;not null"`
-	Role         string    `json: "role" form:"role" gorm:"default:user"`      //user
-	Email        string    `json: "email" form:"email" gorm:"unique;not null"` //unique,
-	Password     string    `json: "password" form:"password" gorm:"not null"`
-	Token        string    `json:"token" form:"token"`
-	Avatar       string    `json: "avatar" form:"avatar"`
-	Goals        string    `json:"goals" form:"goals"`
-	MemberStatus string    `json: "member_status" form:"member_status" gorm:"default:reguler"`
-	Created_at   time.Time `json: "created_at"`
-	Updated_at   time.Time `json: "updated_at"`
+	Username     string `json:"username" gorm:"unique;not null"`
+	Role         string `json:"role" gorm:"default:user"`     //user
+	Email        string `json:"email" gorm:"unique;not null"` //unique,
+	Password     string `json:"password" gorm:"not null"`
+	Token        string `jason:"token" form:"token"`
+	Avatar       string `json:"avatar" form:"avatar"`
+	Goals        string `json:"goals" form:"goals"`
+	MemberStatus string `json:"member_status" gorm:"default:reguler"`
+	Created_at   time.Time
+	Updated_at   time.Time
 }
 
 type Bussiness interface {

@@ -23,18 +23,18 @@ func NewHandlerAccount(userBussiness user.Bussiness) *UserHandler {
 
 func (usrHandler *UserHandler) CreateUserHandler(e echo.Context) error {
 	newAccount := req.User{}
-	fmt.Println("this new account data", newAccount)
-	fmt.Println("this binding data", e.Bind(&newAccount))
-	if len([]rune(newAccount.Password)) < 8 {
-		return e.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Password must be greather than 8 Characters",
-		})
-	}
 	if err := e.Bind(&newAccount); err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),
 		})
 	}
+	fmt.Println("this new account data", newAccount)
+	if len([]rune(newAccount.Password)) < 8 {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": "Password must be greather than 8 Characters",
+		})
+	}
+
 	if err := usrHandler.userBussiness.CreateUser(newAccount.ToUserCore()); err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err.Error(),
