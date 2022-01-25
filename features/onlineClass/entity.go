@@ -6,11 +6,11 @@ type OnlineClassCore struct {
 	ID        int
 	Name      string `json:"name"`
 	Day       string `json:"day"`
-	Date      string `json:"date`
+	Date      string `json:"date"`
 	Link      string `json:"link"`
 	Time      string `json:"time"`
 	Trainer   string `json:"trainer"`
-	Image     string `json: "image"`
+	Image     string `json:"image"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
