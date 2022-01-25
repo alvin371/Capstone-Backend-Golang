@@ -26,8 +26,15 @@ func New() *echo.Echo {
 
 	e.GET("/online-class", presenter.OnlineClassPresentation.GetAllClassHandler)
 	e.GET("/online-class/:id", presenter.OnlineClassPresentation.GetClassByIdHandler)
-	e.POST("/online-class/create", presenter.OnlineClassPresentation.CreateClassHandler)
-	e.PATCH("/online-class/edit/:id", presenter.OnlineClassPresentation.UpdateClassHandler)
-	e.PATCH("/online-class/delete/:id", presenter.OnlineClassPresentation.DeleteClassHandler)
+	jwt.POST("/online-class/create", presenter.OnlineClassPresentation.CreateClassHandler)
+	jwt.PATCH("/online-class/edit/:id", presenter.OnlineClassPresentation.UpdateClassHandler)
+	jwt.PATCH("/online-class/delete/:id", presenter.OnlineClassPresentation.DeleteClassHandler)
+	// User Credential
+	e.POST("/user/register", presenter.UserPresentation.CreateUserHandler)
+	e.POST("/user/login", presenter.UserPresentation.LoginUserHandler)
+	jwt.GET("/user", presenter.UserPresentation.GetAllUserHandler)
+	jwt.GET("/user/:id", presenter.UserPresentation.GetUserById)
+	e.PUT("/user/:id", presenter.UserPresentation.UpdateAccountHandler)
+
 	return e
 }

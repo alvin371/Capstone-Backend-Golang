@@ -22,7 +22,7 @@ func NewNewsHandler(newsBussiness news.Bussiness) *NewsHandler {
 
 func (nh *NewsHandler) GetNewsByIDHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
-	fmt.Println("Isi ID : ", id)
+	// fmt.Println("Isi ID : ", id)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),

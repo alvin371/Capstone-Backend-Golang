@@ -4,11 +4,11 @@ import "time"
 
 type NewsCore struct {
 	ID          int       `param:"id"`
-	Title       string    `json: "title" param:"title"`
-	Description string    `json: "description" param:"description"`
-	Content     string    `json: "content" param:"content"`
-	CreatorName string    `json: "creator_name" param:"creator_name"`
-	Picture     string    `json: "picture" param:"picture"`
+	Title       string    `json: "title" form:"title"`
+	Description string    `json: "description" form:"description"`
+	Content     string    `json: "content" form:"content"`
+	CreatorName string    `json: "creator" form:"creator"`
+	Picture     string    `json: "picture" form:"picture"`
 	Created_at  time.Time `json: "created_at" `
 	Updated_at  time.Time `json: "updated_at" `
 }
