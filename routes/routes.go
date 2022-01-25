@@ -44,5 +44,9 @@ func New() *echo.Echo {
 	e.POST("/offline-class/create", presenter.PresenterOfflineClassPresentation.CreateOfflineClassHandler)
 	e.PATCH("/offline-class/edit/:id", presenter.PresenterOfflineClassPresentation.UpdateOfflineClassHandler)
 	e.PATCH("/offline-class/delete/:id", presenter.PresenterOfflineClassPresentation.DeleteOfflineClassHandler)
+
+	// Booking Offline
+	jwt.GET("/booking-offline", presenter.BookingOfflinePresentation.GetListBookingOffline)
+	e.POST("/booking-offline/create", presenter.BookingOfflinePresentation.InsertMemberBookingOffline)
 	return e
 }

@@ -1,4 +1,4 @@
-package data
+package rep
 
 import (
 	"capstone/backend/features/bookingOffline"
@@ -11,11 +11,11 @@ type OfflineClassUser struct {
 	UserID    int
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	Class     OfflineClassCore
-	User      User
+	Class     OfflineClassResponse
+	User      UserResponse
 }
 
-type OfflineClassCore struct {
+type OfflineClassResponse struct {
 	ID       int
 	Name     string
 	Day      string
@@ -25,7 +25,7 @@ type OfflineClassCore struct {
 	Trainer  string
 	Image    string
 }
-type User struct {
+type UserResponse struct {
 	ID           uint
 	Username     string
 	Role         string
@@ -37,8 +37,8 @@ type User struct {
 	MemberStatus string
 }
 
-func ToUserCore(data User) bookingOffline.User {
-	return bookingOffline.User{
+func ToUserResponse(data bookingOffline.User) UserResponse {
+	return UserResponse{
 		ID:           data.ID,
 		Username:     data.Username,
 		Role:         data.Role,
@@ -51,8 +51,8 @@ func ToUserCore(data User) bookingOffline.User {
 	}
 }
 
-func ToOfflineClassCore(core OfflineClassCore) bookingOffline.OfflineClassCore {
-	return bookingOffline.OfflineClassCore{
+func ToOfflineClassResponse(core bookingOffline.OfflineClassCore) OfflineClassResponse {
+	return OfflineClassResponse{
 		ID:       core.ID,
 		Name:     core.Name,
 		Day:      core.Day,
@@ -63,21 +63,20 @@ func ToOfflineClassCore(core OfflineClassCore) bookingOffline.OfflineClassCore {
 		Image:    core.Image,
 	}
 }
-
-func ToBookingOfflineCore(core OfflineClassUser) bookingOffline.OfflineClassUser {
-	return bookingOffline.OfflineClassUser{
+func ToBookingOfflineCore(core bookingOffline.OfflineClassUser) OfflineClassUser {
+	return OfflineClassUser{
 		ID:        core.ID,
 		ClassID:   core.Class.ID,
 		UserID:    int(core.User.ID),
 		CreatedAt: core.CreatedAt,
 		UpdatedAt: core.UpdatedAt,
-		Class:     ToOfflineClassCore(core.Class),
-		User:      ToUserCore(core.User),
+		Class:     ToOfflineClassResponse(core.Class),
+		User:      ToUserResponse(core.User),
 	}
 }
 
-func ToBookingOfflineCoreList(oc []OfflineClassUser) []bookingOffline.OfflineClassUser {
-	conv := []bookingOffline.OfflineClassUser{}
+func ToBookingOfflineCoreList(oc []bookingOffline.OfflineClassUser) []OfflineClassUser {
+	conv := []OfflineClassUser{}
 
 	for _, ocList := range oc {
 		conv = append(conv, ToBookingOfflineCore(ocList))

@@ -17,6 +17,10 @@ import (
 	_offlineClass_bussiness "capstone/backend/features/offlineClass/bussiness"
 	_offlineClass_data "capstone/backend/features/offlineClass/data"
 	_offlineClass_presentation "capstone/backend/features/offlineClass/presentation"
+
+	_bookingOffline_bussiness "capstone/backend/features/bookingOffline/bussiness"
+	_bookingOffline_data "capstone/backend/features/bookingOffline/data"
+	_bookingOffline_presentation "capstone/backend/features/bookingOffline/presentation"
 )
 
 type Presenter struct {
@@ -24,6 +28,7 @@ type Presenter struct {
 	UserPresentation                  *_user_presentation.UserHandler
 	OnlineClassPresentation           *_onlineClass_presentation.OnlineClassHandler
 	PresenterOfflineClassPresentation *_offlineClass_presentation.OfflineClassHandler
+	BookingOfflinePresentation        *_bookingOffline_presentation.BookingOfflineHandler
 }
 
 func Init() Presenter {
@@ -45,11 +50,16 @@ func Init() Presenter {
 	offlineClassBussiness := _offlineClass_bussiness.NewBussinessOfflineClass(offlineClassData)
 	offlineClassPresentation := _offlineClass_presentation.NewOfflineClassHandler(offlineClassBussiness)
 
+	bookingOfflineData := _bookingOffline_data.NewBookingOfflineRepository(driver.DB)
+	bookingOfflineBussiness := _bookingOffline_bussiness.NewBussinessBookingOfflineClass(bookingOfflineData)
+	bookingOfflinePresentation := _bookingOffline_presentation.NewBookingOfflineHandler(bookingOfflineBussiness)
+
 	return Presenter{
 		NewsPresentation:                  newsPresentation,
 		UserPresentation:                  userPresentation,
 		OnlineClassPresentation:           onlineClassPresentation,
 		PresenterOfflineClassPresentation: offlineClassPresentation,
+		BookingOfflinePresentation:        &bookingOfflinePresentation,
 	}
 
 }
