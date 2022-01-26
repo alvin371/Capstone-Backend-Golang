@@ -94,9 +94,6 @@ func (usrHandler *UserHandler) GetAllUserHandler(e echo.Context) error {
 func (usrHandler *UserHandler) LoginUserHandler(e echo.Context) error {
 	AccountAuth := req.UserAuth{}
 	e.Bind(&AccountAuth)
-	hash, err := bcrypt.GenerateFromPassword([]byte(AccountAuth.Password), 5)
-	AccountAuth.Password = string(hash)
-	fmt.Println("account auth", AccountAuth)
 	data, err := usrHandler.userBussiness.LoginUser(AccountAuth.ToUserAuth())
 	if err != nil {
 		return e.JSON(http.StatusForbidden, map[string]interface{}{
@@ -130,3 +127,4 @@ func (usrHandler *UserHandler) UpdateAccountHandler(e echo.Context) error {
 		"data":    rep.ToUserCore(data),
 	})
 }
+
