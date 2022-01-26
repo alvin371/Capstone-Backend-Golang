@@ -10,7 +10,7 @@
         "host": "gym.cj8zkyislcf5.us-east-2.rds.amazonaws.com",
         "port": "3306",
         "user": "admin",
-        "pass": "Rahasia12345",
+        "pass": "rahasia123456",
         "name": "gym"
     },
     "jwt": {

@@ -20,8 +20,8 @@ type User struct {
 }
 
 type UserAuth struct {
-	Username string
-	Password string
+	Username string `form:"username"`
+	Password string `form:"password"`
 }
 
 func FromCore(core User) user.User {
