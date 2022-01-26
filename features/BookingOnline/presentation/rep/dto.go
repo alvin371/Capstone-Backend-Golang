@@ -1,4 +1,4 @@
-package data
+package rep
 
 import (
 	"capstone/backend/features/bookingOnline"
@@ -11,11 +11,11 @@ type OnlineClassUser struct {
 	UserID    int
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	Class     OnlineClassCore
-	User      User
+	Class     OnlineClassResponse
+	User      UserResponse
 }
 
-type OnlineClassCore struct {
+type OnlineClassResponse struct {
 	ID      int
 	Name    string
 	Day     string
@@ -25,7 +25,7 @@ type OnlineClassCore struct {
 	Trainer string
 	Image   string
 }
-type User struct {
+type UserResponse struct {
 	ID           uint
 	Username     string
 	Role         string
@@ -37,8 +37,8 @@ type User struct {
 	MemberStatus string
 }
 
-func ToUserCore(data User) bookingOnline.User {
-	return bookingOnline.User{
+func ToUserResponse(data bookingOnline.User) UserResponse {
+	return UserResponse{
 		ID:           data.ID,
 		Username:     data.Username,
 		Role:         data.Role,
@@ -51,8 +51,8 @@ func ToUserCore(data User) bookingOnline.User {
 	}
 }
 
-func ToOnlineClassCore(core OnlineClassCore) bookingOnline.OnlineClassCore {
-	return bookingOnline.OnlineClassCore{
+func ToOfflineClassResponse(core bookingOnline.OnlineClassCore) OnlineClassResponse {
+	return OnlineClassResponse{
 		ID:      core.ID,
 		Name:    core.Name,
 		Day:     core.Day,
@@ -63,24 +63,23 @@ func ToOnlineClassCore(core OnlineClassCore) bookingOnline.OnlineClassCore {
 		Image:   core.Image,
 	}
 }
-
-func TobookingOnlineCoe(core OnlineClassUser) bookingOnline.OnlineClassUser {
-	return bookingOnline.OnlineClassUser{
+func ToBookingOnlineCore(core bookingOnline.OnlineClassUser) OnlineClassUser {
+	return OnlineClassUser{
 		ID:        core.ID,
 		ClassID:   core.Class.ID,
 		UserID:    int(core.User.ID),
 		CreatedAt: core.CreatedAt,
 		UpdatedAt: core.UpdatedAt,
-		Class:     ToOnlineClassCore(core.Class),
-		User:      ToUserCore(core.User),
+		Class:     ToOfflineClassResponse(core.Class),
+		User:      ToUserResponse(core.User),
 	}
 }
 
-func TobookingOnlineCoreList(oc []OnlineClassUser) []bookingOnline.OnlineClassUser {
-	conv := []bookingOnline.OnlineClassUser{}
+func TobookingOnlineCoreList(oc []bookingOnline.OnlineClassUser) []OnlineClassUser {
+	conv := []OnlineClassUser{}
 
 	for _, ocList := range oc {
-		conv = append(conv, TobookingOnlineCoe(ocList))
+		conv = append(conv, ToBookingOnlineCore(ocList))
 	}
 	return conv
 }

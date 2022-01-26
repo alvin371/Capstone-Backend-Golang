@@ -1,24 +1,38 @@
 package data
 
 import (
-	"capstone/backend/features/bookingOffline"
+	"capstone/backend/features/bookingOnline"
 
 	"gorm.io/gorm"
 )
 
-type mysqlBookingOfflineClassRepo struct {
+type mysqlbookingOnlineClassRepo struct {
 	Conn *gorm.DB
 }
 
-func NewBookingOfflineRepository(conn *gorm.DB) bookingOffline.Data {
-	return &mysqlBookingOfflineClassRepo{
+func NewBookingOnlineRepository(conn *gorm.DB) bookingOnline.Data {
+	return &mysqlbookingOnlineClassRepo{
 		Conn: conn,
 	}
 }
 
-func (book *mysqlBookingOfflineClassRepo) SelectAllBookingOffline(bookingOffline.OfflineClassUser) (list []bookingOffline.OfflineClassUser, err error) {
+func (book *mysqlbookingOnlineClassRepo) SelectAllBookingOnline(bookingOnline.OnlineClassUser) (list []bookingOnline.OnlineClassUser, err error) {
+	var record []OnlineClassUser
+	err = book.Conn.Find(&record).Error
 
+	if err != nil {
+		return nil, err
+	}
+	return TobookingOnlineCoreList(record), nil
 }
-func (book *mysqlBookingOfflineClassRepo) InsertMemberBookingOffline(userID int, classID int) (err error) {
+func (book *mysqlbookingOnlineClassRepo) InsertMemberBookingOnline(userID int, classID int) (err error) {
+	var bookingOnline = OnlineClassUser{}
+	bookingOnline.UserID = userID
+	bookingOnline.ClassID = classID
+	// convData := TobookingOnlineCore(bookingOnline)
 
+	if err := book.Conn.Create(&bookingOnline).Error; err != nil {
+		return err
+	}
+	return nil
 }

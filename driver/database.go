@@ -4,6 +4,7 @@ import (
 	news "capstone/backend/features/News/data"
 	user "capstone/backend/features/User"
 	bookingOffline "capstone/backend/features/bookingOffline"
+	bookingOnline "capstone/backend/features/bookingOnline"
 	offlineClass "capstone/backend/features/offlineClass"
 	onlineClass "capstone/backend/features/onlineClass"
 
@@ -24,5 +25,5 @@ func InitDB() {
 		panic(err)
 	}
 	DB = db
-	DB.AutoMigrate(&news.News{}, &onlineClass.OnlineClassCore{}, &offlineClass.OfflineClassCore{}, &user.User{}, &bookingOffline.OfflineClassUser{})
+	DB.AutoMigrate(&news.News{}, &onlineClass.OnlineClassCore{}, &offlineClass.OfflineClassCore{}, &user.User{}, &bookingOffline.OfflineClassUser{}, &bookingOnline.OnlineClassUser{})
 }
