@@ -13,6 +13,10 @@ func New() *echo.Echo {
 
 	e := echo.New()
 	jwt := e.Group("")
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:3000"},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderAuthorization, echo.HeaderContentType, echo.HeaderAccept},
+	}))
 	jwt.Use(middleware.JWT([]byte(config.JWT_KEY)))
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "method=${method}, uri=${uri}, status=${status}\n",
