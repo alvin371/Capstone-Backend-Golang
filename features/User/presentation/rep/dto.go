@@ -5,17 +5,26 @@ import (
 )
 
 type User struct {
-	Username string `json: "username"`
-	Role     string `json: "role"`
-	Email    string `json: "email"`
-	Password string `json: "password"`
-	Token    string `json:"token"`
+	Username     string `json:"username"`
+	Role         string `json:"role"`
+	Email        string `json:"email"`
+	Password     string `json:"password"`
+	Token        string `json:"token"`
+	Avatar       string `json:"avatar"`
+	Goals        string `json:"goals"`
+	MemberStatus string `json:"member_status"`
 }
 
 type UserLogin struct {
-	ID       uint   `json:"id"`
-	Username string `json:"username"`
-	Token    string `json:"token"`
+	ID           uint   `json:"id"`
+	Username     string `json:"username"`
+	Token        string `json:"token"`
+	Role         string `json:"role"`
+	Email        string `json:"email"`
+	Password     string `json:"password"`
+	Avatar       string `json:"avatar"`
+	Goals        string `json:"goals"`
+	MemberStatus string `json:"member_status"`
 }
 
 func ToUserCore(req user.User) User {
